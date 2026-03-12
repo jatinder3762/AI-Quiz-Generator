@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 37 70% 97%;
+  --foreground: 214 54% 18%;
+  --card: 0 0% 100%;
+  --primary: 167 67% 35%;
+  --secondary: 33 100% 60%;
+  --muted: 40 30% 92%;
+}
+
+* {
+  @apply border-zinc-200;
+}
+
+body {
+  @apply bg-background text-foreground font-sans;
+  background-image: radial-gradient(circle at 10% 10%, rgba(255, 190, 92, 0.25), transparent 35%),
+    radial-gradient(circle at 90% 20%, rgba(32, 166, 153, 0.18), transparent 30%);
+}

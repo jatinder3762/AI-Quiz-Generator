@@ -54,6 +54,7 @@ frontend/.next/
 frontend/.turbo/
 frontend/out/
 frontend/.vercel/
+frontend/next-env.d.ts
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
