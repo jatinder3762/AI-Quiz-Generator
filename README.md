@@ -37,12 +37,25 @@ Production-oriented SaaS starter that transforms uploaded study documents into A
 3. `.venv\\Scripts\\activate`
 4. `pip install -r requirements.txt`
 5. Run schema in Postgres: `database/schema.sql`
-6. `uvicorn main:app --reload`
+6. Create test login users (student + admin): `python -m scripts.seed_test_users`
+7. `uvicorn main:app --reload`
 
 ### Frontend
 1. `cd frontend`
 2. `npm install`
 3. `npm run dev`
+
+## Test Login Accounts
+Run the seed command first from `backend/`:
+- `python -m scripts.seed_test_users`
+
+It creates (or refreshes) these credentials:
+- Student account:
+   - Email: `test.user@aiquiz.local`
+   - Password: `TestUser@123`
+- Admin account:
+   - Email: `test.admin@aiquiz.local`
+   - Password: `TestAdmin@123`
 
 ## API Endpoints (v1 prefix)
 - `POST /api/v1/register`
