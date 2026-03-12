@@ -1,0 +1,74 @@
+# ------------------------------
+# OS / Editor
+# ------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ------------------------------
+# Environment / Secrets
+# ------------------------------
+*.env
+*.env.*
+!.env.example
+!.env.*.example
+
+# ------------------------------
+# Python
+# ------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+backend/.venv/
+
+# Backend runtime/generated data
+backend/__pycache__/
+backend/chroma_data/
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/*.log
+
+# ------------------------------
+# Node / Frontend
+# ------------------------------
+frontend/node_modules/
+frontend/.next/
+frontend/.turbo/
+frontend/out/
+frontend/.vercel/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+
+# ------------------------------
+# Database / Containers
+# ------------------------------
+*.sqlite
+*.sqlite3
+docker-data/
+
+# ------------------------------
+# Reports / Archives
+# ------------------------------
+*.pdf
+*.csv
+*.zip
