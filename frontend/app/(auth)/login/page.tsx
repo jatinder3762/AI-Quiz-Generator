@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -8,12 +9,14 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { apiFetch } from "@/lib/api";
 import { authStore } from "@/lib/auth";
+import { demoStore } from "@/lib/demo-store";
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [demoLoading, setDemoLoading] = useState(false);
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -28,6 +31,13 @@ export default function LoginPage() {
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     }
+  }
+
+  function enterDemo() {
+    setDemoLoading(true);
+    demoStore.clear();
+    authStore.setDemo();
+    router.push("/dashboard");
   }
 
   return (
@@ -47,6 +57,37 @@ export default function LoginPage() {
           Sign In
         </Button>
       </form>
+
+      <div className="relative my-5">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t border-zinc-200" />
+        </div>
+        <div className="relative flex justify-center">
+          <span className="bg-white px-3 text-xs text-zinc-400">or</span>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        onClick={enterDemo}
+        disabled={demoLoading}
+        className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-zinc-300 bg-zinc-50 px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:border-primary hover:bg-primary/5 hover:text-primary disabled:opacity-60"
+      >
+        <span className="text-base">🧪</span>
+        {demoLoading ? "Entering demo…" : "Try Demo — No account needed"}
+      </button>
+
+      <p className="mt-3 text-center text-xs text-zinc-400">
+        Demo is limited to 3 files (2 MB each). No data is sent to any server.
+      </p>
+
+      <p className="mt-5 text-center text-sm text-zinc-500">
+        No account?{" "}
+        <Link href="/register" className="font-semibold text-primary">
+          Register for full access
+        </Link>
+      </p>
     </Card>
   );
 }
+

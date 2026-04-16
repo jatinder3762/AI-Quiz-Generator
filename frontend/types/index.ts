@@ -17,6 +17,7 @@ export type Quiz = {
   title: string;
   difficulty: "easy" | "medium" | "hard";
   num_questions: number;
+  is_submitted: boolean;
   created_at: string;
   questions: Question[];
 };

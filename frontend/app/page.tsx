@@ -33,6 +33,9 @@ export default function HomePage() {
         <Link href="/register" className="rounded-xl bg-primary px-4 py-2 font-semibold text-white">
           Get Started
         </Link>
+        <Link href="/demo" className="rounded-xl border border-zinc-300 bg-white px-4 py-2 font-semibold text-zinc-900">
+          Try Demo
+        </Link>
         <Link href="/login" className="rounded-xl bg-secondary px-4 py-2 font-semibold text-black">
           Login
         </Link>
