@@ -6,7 +6,7 @@ from app.models.enums import DifficultyLevel
 
 
 class GenerateQuizRequest(BaseModel):
-    document_id: str
+    document_ids: list[str] = Field(min_length=1)
     num_questions: int = Field(ge=1, le=30)
     difficulty: DifficultyLevel
 
@@ -22,6 +22,7 @@ class QuizResponse(BaseModel):
     title: str
     difficulty: DifficultyLevel
     num_questions: int
+    is_submitted: bool
     created_at: datetime
     questions: list[QuestionPayload]
 

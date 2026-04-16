@@ -28,3 +28,15 @@ class VectorStoreService:
     def search_chunks(self, document_id: str, query: str, k: int = 6) -> list[str]:
         docs = self.store.similarity_search(query, k=k, filter={"document_id": document_id})
         return [d.page_content for d in docs]
+
+    def search_chunks_multi(self, document_ids: list[str], query: str, k: int = 6) -> list[str]:
+        """Search across multiple documents and return merged, deduplicated chunks."""
+        seen: set[str] = set()
+        results: list[str] = []
+        per_doc = max(2, k // len(document_ids))
+        for doc_id in document_ids:
+            for chunk in self.search_chunks(document_id=doc_id, query=query, k=per_doc):
+                if chunk not in seen:
+                    seen.add(chunk)
+                    results.append(chunk)
+        return results[:k]

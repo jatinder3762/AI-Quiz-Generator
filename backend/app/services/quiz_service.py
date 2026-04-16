@@ -18,24 +18,26 @@ class QuizService:
         self,
         db: AsyncSession,
         user: User,
-        document_id: str,
+        document_ids: list[str],
         num_questions: int,
         difficulty: str,
     ) -> Quiz:
-        result = await db.execute(
-            select(Document).where(Document.id == document_id, Document.user_id == user.id)
+        results = await db.execute(
+            select(Document).where(Document.id.in_(document_ids), Document.user_id == user.id)
         )
-        document = result.scalar_one_or_none()
-        if not document:
-            raise ValueError("Document not found")
+        documents = results.scalars().all()
+        if not documents:
+            raise ValueError("No documents found")
 
-        context = "\n\n".join(self.vector.search_chunks(document_id=document_id, query="important concepts"))
+        context = "\n\n".join(self.vector.search_chunks_multi(document_ids=[d.id for d in documents], query="important concepts", k=8))
         items = self.llm.generate_mcq(context=context, num_questions=num_questions, difficulty=difficulty)
 
+        primary_doc = documents[0]
+        title = primary_doc.filename if len(documents) == 1 else f"{len(documents)} Documents Quiz"
         quiz = Quiz(
             user_id=user.id,
-            document_id=document_id,
-            title=f"{document.filename} Quiz",
+            document_id=primary_doc.id,
+            title=f"{title} Quiz",
             difficulty=difficulty,
             num_questions=num_questions,
         )

@@ -35,7 +35,7 @@ async def generate_quiz(
         quiz = await service.generate_quiz(
             db=db,
             user=user,
-            document_id=payload.document_id,
+            document_ids=payload.document_ids,
             num_questions=payload.num_questions,
             difficulty=payload.difficulty.value,
         )
@@ -48,6 +48,7 @@ async def generate_quiz(
         title=quiz.title,
         difficulty=quiz.difficulty,
         num_questions=quiz.num_questions,
+        is_submitted=quiz.is_submitted,
         created_at=quiz.created_at,
         questions=[QuestionPayload(id=q.id, prompt=q.prompt, options=q.options) for q in quiz.questions],
     )
@@ -70,6 +71,7 @@ async def get_quiz(
         title=quiz.title,
         difficulty=quiz.difficulty,
         num_questions=quiz.num_questions,
+        is_submitted=quiz.is_submitted,
         created_at=quiz.created_at,
         questions=[QuestionPayload(id=q.id, prompt=q.prompt, options=q.options) for q in quiz.questions],
     )
