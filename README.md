@@ -47,27 +47,13 @@
 
 ## Screenshots
 
-> Add screenshots to `docs/screenshots/` — see `docs/screenshots/README.md` for the list.
+### Demo — Upload & Generate Quiz
+![Demo Upload & Generate Quiz](docs/screenshots/Screenshot_2.jpg)
+*Visit `/demo` to upload a document and generate a quiz instantly — no account needed. Files stay in your browser.*
 
-### Demo Page
-<!-- ![Demo Page](docs/screenshots/02-demo.png) -->
-*Visit `/demo` to try the full quiz flow without an account.*
-
-### Dashboard
-<!-- ![Dashboard](docs/screenshots/06-dashboard.png) -->
-*Your uploaded documents, quiz history, and score summary.*
-
-### Generate Quiz
-<!-- ![Generate Quiz](docs/screenshots/08-generate.png) -->
-*Select one or more documents, choose difficulty and number of questions.*
-
-### Quiz Page
-<!-- ![Quiz](docs/screenshots/09-quiz.png) -->
-*Answer multiple-choice questions and submit for instant results.*
-
-### Results Page
-<!-- ![Results](docs/screenshots/10-results.png) -->
-*Score chart, per-question breakdown, and PDF/CSV export.*
+### Demo — Quiz Results & User Menu
+![Demo Quiz Results](docs/screenshots/Screenshot_1.jpg)
+*View your quiz results in demo mode. The user avatar dropdown gives quick access to all pages.*
 
 ---
 
