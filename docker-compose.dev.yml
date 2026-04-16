@@ -1,0 +1,15 @@
+# Development override — removes the frontend container so you can run
+# `npm run dev` locally with hot-reload instead.
+#
+# Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+#   cd frontend && npm install && npm run dev
+#
+# This starts postgres, minio, and backend only.
+
+version: "3.9"
+
+services:
+  frontend:
+    profiles:
+      - disabled   # effectively removes it from the default service set

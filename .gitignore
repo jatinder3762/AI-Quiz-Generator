@@ -73,3 +73,10 @@ docker-data/
 *.pdf
 *.csv
 *.zip
+
+# Dev logs
+frontend-dev.log
+frontend-dev.err.log
+
+# Backend logs directory
+backend/logs/
