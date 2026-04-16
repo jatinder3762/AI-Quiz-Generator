@@ -1,11 +1,15 @@
+import io
 from pathlib import Path
 from uuid import uuid4
 
 from docx import Document as DocxDocument
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from pdfminer.high_level import extract_text as pdfminer_extract_text
 from pypdf import PdfReader
 
 from app.utils.sanitizer import clean_text
+
+_MIN_TEXT_LENGTH = 50
 
 
 class DocumentProcessor:
@@ -16,8 +20,13 @@ class DocumentProcessor:
         temp_path.write_bytes(file_bytes)
         try:
             if file_type == "pdf":
+                # Try pypdf first (fast)
                 reader = PdfReader(str(temp_path))
                 text = "\n".join(page.extract_text() or "" for page in reader.pages)
+                # Fall back to pdfminer when pypdf extracts too little
+                # (common with slide-deck / presentation PDFs)
+                if len(text.strip()) < _MIN_TEXT_LENGTH:
+                    text = pdfminer_extract_text(str(temp_path)) or ""
             else:
                 doc = DocxDocument(str(temp_path))
                 text = "\n".join(p.text for p in doc.paragraphs)
