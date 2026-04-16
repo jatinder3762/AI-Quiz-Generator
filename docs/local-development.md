@@ -11,6 +11,7 @@ For production deployment on VPS/cloud hosting, see `README-HOSTING.md`.
 1. `docker compose up --build`
 2. Open frontend at `http://localhost:3000`
 3. Open backend docs at `http://localhost:8000/docs`
+4. If local debug is enabled (`DEBUG=true`), inspect backend errors at `http://localhost:8000/api/v1/debug/error-log`
 
 ## Option B: Run Services Manually
 

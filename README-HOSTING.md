@@ -7,6 +7,43 @@ This guide explains how to deploy the project on common web hosting setups.
 - Cloud app platforms (Render, Railway, Fly.io)
 - Split deployment (Frontend on Vercel, Backend on Render/Railway, Postgres on managed DB)
 
+## Fastest Way: Publish Directly From GitHub
+This is the simplest workflow for a live website users can test:
+
+1. Push code to GitHub
+```bash
+git add .
+git commit -m "Prepare cloud deployment"
+git push origin main
+```
+
+2. Deploy frontend from GitHub on Vercel
+- New Project -> Import GitHub repository
+- Root Directory: `frontend`
+- Framework: Next.js
+- Env var: `NEXT_PUBLIC_API_BASE_URL=https://<backend-domain>/api/v1`
+
+3. Deploy backend from GitHub on Render (or Railway)
+- New Web Service -> Connect repository
+- Root Directory: `backend`
+- Build command: `pip install -r requirements.txt`
+- Start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+- Add env vars from backend `.env.example`
+
+4. Add managed Postgres and set `DATABASE_URL`
+- Supabase / Railway / Neon all work
+- Run `database/schema.sql` once
+
+5. Set CORS/frontend URL
+- Backend env: `FRONTEND_URL=https://<frontend-domain>`
+
+6. Optional: configure custom domains
+- `your-domain.com` -> Vercel frontend
+- `api.your-domain.com` -> Render/Railway backend
+
+7. Add quick public demo route for visitors
+- `/demo` has 2 runnable sample quizzes without document upload
+
 ## Recommended Production Architecture
 - Frontend: Next.js app served at `https://your-domain.com`
 - Backend: FastAPI served at `https://api.your-domain.com`

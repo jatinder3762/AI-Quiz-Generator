@@ -21,6 +21,19 @@ Production-oriented SaaS starter that transforms uploaded study documents into A
 - Local development guide: `docs/local-development.md`
 - Platform deployment notes: `docs/deployment.md`
 
+## Deploy From GitHub (Recommended)
+Use this flow if you want to publish quickly and let users test online:
+1. Push this repository to GitHub.
+2. Deploy `frontend/` on Vercel using "Import Git Repository".
+3. Deploy `backend/` on Render or Railway from the same GitHub repository.
+4. Create a managed Postgres database (Supabase, Railway Postgres, or Neon).
+5. Set frontend env: `NEXT_PUBLIC_API_BASE_URL=https://<your-backend-domain>/api/v1`.
+6. Set backend env: `DATABASE_URL`, `SECRET_KEY`, `FRONTEND_URL`, `OPENAI_API_KEY`, and `S3_*` values.
+7. Run `database/schema.sql` on your Postgres instance.
+8. Open your deployed frontend URL and test register/login, upload, and quiz generation.
+
+See `README-HOSTING.md` for detailed step-by-step instructions.
+
 ## Quick Start (Local)
 1. Copy env templates:
    - `backend/.env.example` -> `backend/.env`
@@ -29,6 +42,7 @@ Production-oriented SaaS starter that transforms uploaded study documents into A
    - `docker compose up --build`
 3. Frontend: http://localhost:3000
 4. Backend docs: http://localhost:8000/docs
+5. Local debug error log API (when `DEBUG=true`): `GET /api/v1/debug/error-log`
 
 ## Manual Local Dev
 ### Backend
@@ -56,6 +70,16 @@ It creates (or refreshes) these credentials:
 - Admin account:
    - Email: `test.admin@aiquiz.local`
    - Password: `TestAdmin@123`
+
+## Public Demo Samples
+To let visitors try the UI without upload/API setup, open:
+- `https://<your-frontend-domain>/demo`
+
+The demo page includes 2 built-in, runnable sample quizzes:
+- Python Basics
+- Networking Basics
+
+This is useful for portfolio/demo sharing because users can see the quiz structure and scoring flow immediately.
 
 ## API Endpoints (v1 prefix)
 - `POST /api/v1/register`
@@ -99,6 +123,8 @@ It creates (or refreshes) these credentials:
 - `OPENAI_MODEL`
 - `FRONTEND_URL`
 - `RATE_LIMIT_QUIZ_GENERATION`
+- `ERROR_LOG_FILE`
+- `ENABLE_DEBUG_ERROR_ENDPOINT`
 
 ### Frontend
 - `NEXT_PUBLIC_API_BASE_URL`
