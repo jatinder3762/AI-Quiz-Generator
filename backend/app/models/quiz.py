@@ -13,7 +13,10 @@ class Quiz(UUIDMixin, TimestampMixin, Base):
         ForeignKey("documents.id", ondelete="CASCADE"), nullable=False, index=True
     )
     title: Mapped[str] = mapped_column(String(255), nullable=False)
-    difficulty: Mapped[DifficultyLevel] = mapped_column(Enum(DifficultyLevel), nullable=False)
+    difficulty: Mapped[DifficultyLevel] = mapped_column(
+        Enum(DifficultyLevel, values_callable=lambda enum: [item.value for item in enum], native_enum=False),
+        nullable=False,
+    )
     num_questions: Mapped[int] = mapped_column(Integer, nullable=False)
     is_submitted: Mapped[bool] = mapped_column(default=False)
 

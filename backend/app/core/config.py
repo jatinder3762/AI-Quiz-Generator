@@ -1,5 +1,5 @@
 from functools import lru_cache
-from pydantic import AnyHttpUrl, Field
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -31,8 +31,38 @@ class Settings(BaseSettings):
     openai_api_key: str | None = None
     openai_model: str = "gpt-4o-mini"
 
-    frontend_url: AnyHttpUrl = "http://localhost:3000"
+    ollama_base_url: str = "http://localhost:11434/v1"
+    ollama_model: str = "llama3.2"
+
+    groq_api_key: str | None = None
+    groq_model: str = "llama-3.3-70b-versatile"
+
+    frontend_url: str = "http://localhost:3001"
     rate_limit_quiz_generation: str = "10/minute"
+    error_log_file: str = "./logs/backend-errors.log"
+    enable_debug_error_endpoint: bool = True
+
+    @field_validator("debug", mode="before")
+    @classmethod
+    def parse_debug_flag(cls, value: object) -> object:
+        if isinstance(value, str):
+            normalized = value.strip().lower()
+            if normalized in {"1", "true", "yes", "on", "debug", "development", "dev"}:
+                return True
+            if normalized in {"0", "false", "no", "off", "release", "production", "prod"}:
+                return False
+        return value
+
+    @field_validator("enable_debug_error_endpoint", mode="before")
+    @classmethod
+    def parse_debug_endpoint_flag(cls, value: object) -> object:
+        if isinstance(value, str):
+            normalized = value.strip().lower()
+            if normalized in {"1", "true", "yes", "on"}:
+                return True
+            if normalized in {"0", "false", "no", "off"}:
+                return False
+        return value
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
